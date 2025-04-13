@@ -5,7 +5,6 @@ from typing import List
 class DesktopEntryBuilder:
     header: str = "[Desktop Entry]"
     
-
     def WithName(self, name: str) -> "DesktopEntryBuilder":
         if name is None or name == '':
             raise Exception("Empty name")
@@ -105,7 +104,6 @@ class DesktopEntryBuilder:
     
     @staticmethod
     def WriteToFile(entry: List[str]) -> None:
-        # Try to find the "Name=" line safely
         name_line = next((line for line in entry if line.startswith("Name=")), None)
         if not name_line:
             raise ValueError("Desktop entry is missing 'Name=' field.")
@@ -118,7 +116,5 @@ class DesktopEntryBuilder:
         with open(file_path, 'w') as file:
             file.write("\n".join(entry) + "\n")
 
-        # Optionally make it executable
-        os.chmod(file_path, 0o755)
 
         
